@@ -20,16 +20,16 @@
 
   {% if page.featured_image %}
     <!-- Meta: Images -->
-    <link rel="image_src" href="/assets/featured-images/{{ page.featured_image }}"/>
-    <meta property="og:image" content="/assets/featured-images/{{ page.featured_image }}"/>
-    <meta name="twitter:image:src" content="/assets/featured-images/{{ page.featured_image }}">
+    <link rel="image_src" href="{{ site.url }}/assets/featured-images/{{ page.featured_image }}"/>
+    <meta property="og:image" content="{{ site.url }}/assets/featured-images/{{ page.featured_image }}"/>
+    <meta name="twitter:image:src" content="{{ site.url }}/assets/featured-images/{{ page.featured_image }}">
   {% endif %}
 
   {% if page.title %}
       <!-- Meta: Title -->
-      <meta name="title" content="{{ page.title }}"/>
-      <meta property="og:title" content="{{ page.title }}"/>
-      <meta name="twitter:title" content="{{ page.title }}">
+      <meta name="title" content="{{ page.title }} - {{ site.title }}"/>
+      <meta property="og:title" content="{{ page.title }} - {{ site.title }}"/>
+      <meta name="twitter:title" content="{{ page.title }} - {{ site.title }}">
   {% endif %}
 
   {% if page.excerpt %}
