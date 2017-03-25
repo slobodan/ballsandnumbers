@@ -3,3 +3,4 @@ _site
 .jekyll-metadata
 /_production
 /node_modules
+/.eslintrc.json

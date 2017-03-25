@@ -1,0 +1,17 @@
+.container.content {
+  max-width: 100%;
+  width: 100%;
+}
+#viz-wrapper {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  background: #f3f3f3;
+}
+#viz {
+  min-width: 100%;
+  white-space: nowrap;
+}
+#viz svg {
+  background: #f3f3f3;
+}
