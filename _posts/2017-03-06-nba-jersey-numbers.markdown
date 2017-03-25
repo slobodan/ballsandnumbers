@@ -2,12 +2,11 @@
 layout: post
 title:  "Jersey Numbers in the NBA"
 date:   2017-03-06 14:00:00 +0100
-categories: dataviz
 featured_image: nba-jersey-numbers.png
 excerpt: Remember the 90's, when everyone wanted to be like Mike? Me too, except it didn't really happen if you're judging by his peers. If you look at number of NBA players who wore 23 on their backs 1989-90 was Peak Jordan, with 18 total players, highest in the league. It's fair to say it was all downhill for MJ after that season, right?
 custom_js:
-- d3.v4.min
-- jquery-3.1.1.min
+- lib/d3.v4.min
+- lib/jquery-3.1.1.min
 - jerseys
 ---
 <p>Remember the 90's, when everyone wanted to <a href="https://www.youtube.com/watch?v=b0AGiq9j_Ak" rel="nofollow">be like Mike</a>? Me too, except it didn't really happen if you're judging by his peers. If you look at number of NBA players who wore 23 on their backs 1989-90 was Peak Jordan, with 18 total players, highest in the league. It's fair to say it was all downhill for MJ after that season, right?</p>

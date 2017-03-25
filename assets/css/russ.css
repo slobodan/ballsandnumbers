@@ -1,0 +1,30 @@
+#viz-scatter,
+#viz-russ-usg,
+#viz-ts,
+#table-wrapper {
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+#viz-russ-usg {
+    min-height: 200px;
+}
+
+th {
+    text-align: left;
+    background-color: #f9f9f9;
+}
+
+td {
+    font-size: 0.8em;
+    background-color: #fff !important;
+}
+
+tr td:nth-child(2),
+tr th:nth-child(2) {
+    text-align: center;
+}
+
+tr.russ {
+    font-weight: bold;
+}
