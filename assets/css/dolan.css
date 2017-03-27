@@ -1,17 +1,21 @@
-.container.content {
+.container.post-content {
   max-width: 100%;
   width: 100%;
 }
 #viz-wrapper {
+  height: 5000px;
   width: 100%;
+  margin: 5rem 0;
   overflow-y: hidden;
   overflow-x: scroll;
-  background: #f3f3f3;
 }
 #viz {
   min-width: 100%;
   white-space: nowrap;
 }
 #viz svg {
-  background: #f3f3f3;
+}
+
+#trigger-1 {
+  min-height: 1px;
 }

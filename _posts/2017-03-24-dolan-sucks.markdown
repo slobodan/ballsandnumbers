@@ -6,11 +6,13 @@ excerpt: Dolan sucks, Dolan sucks, Dolan sucks, Dolan sucks.
 custom_js:
 - lib/d3.v4.min
 - lib/jquery-3.1.1.min
+- lib/Scrollmagic.min
 - dolan
 custom_css:
 - dolan
 ---
 
 <div id="viz-wrapper">
+    <div id="trigger-1"></div>
     <div id="viz"></div>
 </div>
