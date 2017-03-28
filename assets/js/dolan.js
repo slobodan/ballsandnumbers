@@ -2,6 +2,8 @@
 (function bnnDolan() {
   // const svgWidth = jQuery('#viz').width();
   // const svgHeight = jQuery(window).height() - jQuery('#viz').offset().top - 30;
+  const wrapperWidth = jQuery('#viz-wrapper').width();
+  const wrapperHeight = jQuery('#viz-wrapper').height();
   const margin = { top: 0, right: 0, bottom: 0, left: 120 };
   const svgHeight = jQuery(window).height();
   const svgWidth = svgHeight * 4;
@@ -162,16 +164,18 @@
     .style('opacity', 0.5);
 
   // Need to look into collision detection here, to automate y coordinate for events
+  let singleEvents;
   function drawEvents() {
     const eventsGroup = g.append('g')
       .attr('class', 'events');
 
-    const singleEvents = eventsGroup.selectAll('g.single-event')
+    singleEvents = eventsGroup.selectAll('g.single-event')
       .data(events)
       .enter()
       .append('g')
       .attr('class', 'single-event')
-      .attr('transform', () => `translate(0, ${(Math.random() * (200 - 20)) + 20})`);
+      .attr('transform', () => `translate(0, ${(Math.random() * (200 - 20)) + 20})`)
+      .attr('data-ratio', d => timeScale(parseTime(d.date)) / timeScale(parseTime('2017/06/30')));
 
     singleEvents.append('circle')
       .attr('cx', d => timeScale(parseTime(d.date)))
@@ -185,7 +189,8 @@
       .attr('y', -10)
       .style('text-anchor', 'middle')
       .style('fill', blackColor)
-      .style('font-size', '16px');
+      .style('font-size', '16px')
+      .style('opacity', 0);
   }
   drawEvents();
 
@@ -299,7 +304,6 @@
       .attr('x', (d) => {
         const secondYear = +`20${d.slice(-2)}`;
         const firstYear = +`20${d.slice(-2)}` - 1;
-        console.log(timeScale(parseTime(`${firstYear}/07/01`)), timeScale(parseTime(`${secondYear}/07/01`)))
         return (timeScale(parseTime(`${secondYear}/07/01`)) + timeScale(parseTime(`${firstYear}/07/01`))) / 2;
       })
       .attr('y', 15)
@@ -375,7 +379,11 @@
       .addTo(controller)
       .triggerHook(0)
       .on('progress', (e) => {
-        g.attr('transform', `translate(${(-e.progress * 2100) + margin.left}, 0)`);
+        g.attr('transform', `translate(${(e.progress * (wrapperWidth - svgWidth)) + margin.left}, 0)`);
+        singleEvents.each(function () {
+          const ratioValue = d3.select(this).attr('data-ratio');
+          d3.select(this).select('text').style('opacity', e.progress - ratioValue + 0.75);
+        });
       });
   }
   scroller();
