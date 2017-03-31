@@ -3,15 +3,19 @@
   // const svgWidth = jQuery('#viz').width();
   // const svgHeight = jQuery(window).height() - jQuery('#viz').offset().top - 30;
   const wrapperWidth = jQuery('#viz-wrapper').width();
-  const wrapperHeight = jQuery('#viz-wrapper').height();
-  const margin = { top: 0, right: 0, bottom: 0, left: 120 };
+  // const wrapperHeight = jQuery('#viz-wrapper').height();
+  const margin = { top: 50, right: 0, bottom: 0, left: 150 };
   const svgHeight = jQuery(window).height();
-  const svgWidth = svgHeight * 4;
+  const svgWidth = svgHeight * 3 > 2000 ? svgHeight * 3 : 2000;
+  // const svgWidth = wrapperWidth;
 
   const primaryColor = '#006BB6';
   const secondaryColor = '#F58426';
   const tertiaryColor = '#BEC0C2';
   const blackColor = '#282828';
+
+  const gmsTop = svgHeight - 40;
+  const axisVerticalPlacement = svgHeight - 120;
 
   const leagueRank = [
     { season: '1999-00', salaryRank: 2, winLossRank: 9, salary: 71.34, wins: 50, losses: 32 },
@@ -32,23 +36,6 @@
     { season: '2014-15', salaryRank: 4, winLossRank: 29, salary: 80.92, wins: 17, losses: 65 },
     { season: '2015-16', salaryRank: 16, winLossRank: 24, salary: 73.75, wins: 32, losses: 50 },
     { season: '2016-17', salaryRank: 11, winLossRank: 24, salary: 102.59, wins: 27, losses: 45 },
-  ];
-
-  const coaches = [
-    // { name: 'Jeff Van Gundy', start: '1996/03/08', end: '2001/12/09', reason: 'Resigned' },
-    { name: 'Jeff Van Gundy', start: '1999/07/01', end: '2001/12/09', reason: 'Resigned' },
-    { name: 'Don Chaney', start: '2001/12/09', end: '2002/03/05', reason: 'Became full-time' },
-    { name: 'Don Chaney', start: '2002/03/05', end: '2004/01/14', reason: 'Fired' },
-    { name: 'Herb Williams', start: '2004/01/14', end: '2004/01/14', reason: 'Was interim' },
-    { name: 'Lenny Wilkens', start: '2004/01/15', end: '2005/01/22', reason: 'Resigned' },
-    { name: 'Herb Williams', start: '2005/01/22', end: '2005/07/28', reason: 'Was interim' },
-    { name: 'Larry Brown', start: '2005/07/28', end: '2006/06/23', reason: 'Fired' },
-    { name: 'Isiah Thomas', start: '2006/06/23', end: '2008/04/18', reason: 'Fired' },
-    { name: 'Mike D\'Antoni', start: '2008/05/13', end: '2012/03/14', reason: 'Resigned' },
-    { name: 'Mike Woodson', start: '2012/03/14', end: '2014/04/21', reason: 'Fired' },
-    { name: 'Derek Fisher', start: '2014/06/10', end: '2016/02/08', reason: 'Fired' },
-    { name: 'Kurt Rambis', start: '2016/02/08', end: '2016/05/18', reason: 'Was interim' },
-    { name: 'Jerr Hornacek', start: '2016/05/18', end: '2017/04/01', reason: '' },
   ];
 
   const GMs = [
@@ -118,7 +105,6 @@
     '2006/07/01',
     '2007/07/01',
     '2008/07/01',
-    '2008/07/01',
     '2009/07/01',
     '2010/07/01',
     '2011/07/01',
@@ -135,8 +121,16 @@
     .domain([parseTime('1999/07/01'), parseTime('2017/06/30')]);
 
   const rankScale = d3.scaleLinear()
-    .range([500, svgHeight - 200])
+    .range([svgHeight * 0.5, axisVerticalPlacement - 20])
     .domain([1, 30]);
+
+  const salaryLine = d3.line()
+    .x(d => (timeScale(parseTime(`20${d.season.slice(-2)}/01/01`))))
+    .y(d => rankScale(d.salaryRank));
+
+  const winLossLine = d3.line()
+  .x(d => (timeScale(parseTime(`20${d.season.slice(-2)}/01/01`))))
+    .y(d => rankScale(d.winLossRank));
 
   const svg = d3.select('#viz').append('svg')
     .attr('width', svgWidth)
@@ -145,6 +139,155 @@
   const g = svg.append('g')
     .attr('class', 'viz-container')
     .attr('transform', `translate(${margin.left}, 0)`);
+
+  // Draw chart legend
+  function drawLegend() {
+    const legendFontSize = '14px';
+    const legendLeftPush = -10;
+    const legend = g.append('g')
+      .attr('class', 'legend');
+
+    legend.append('text')
+      .text('General manager')
+      .attr('x', -margin.left + 15)
+      .attr('y', gmsTop)
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize)
+      .style('font-weight', 'bold');
+
+    legend.append('text')
+      .text('1')
+      .attr('x', legendLeftPush)
+      .attr('y', rankScale(1))
+      .attr('text-anchor', 'end')
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize);
+
+    legend.append('text')
+      .text('10')
+      .attr('x', legendLeftPush)
+      .attr('y', rankScale(10))
+      .attr('text-anchor', 'end')
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize);
+
+    legend.append('text')
+      .text('20')
+      .attr('x', legendLeftPush)
+      .attr('y', rankScale(20))
+      .attr('text-anchor', 'end')
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize);
+
+    legend.append('text')
+      .text('30')
+      .attr('x', legendLeftPush)
+      .attr('y', rankScale(30))
+      .attr('text-anchor', 'end')
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize);
+
+    const winLossLegend = legend.append('g')
+      .attr('transform', `translate(0, ${rankScale(15) - 20})`);
+
+    winLossLegend.append('text')
+      .text('League rank')
+      .attr('x', -margin.left + 15)
+      .attr('y', 0)
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize)
+      .style('font-weight', 'bold');
+
+    winLossLegend.append('circle')
+      .attr('cx', -margin.left + 22)
+      .attr('cy', 30)
+      .attr('r', 4)
+      .style('fill', secondaryColor);
+
+    winLossLegend.append('circle')
+      .attr('cx', -margin.left + 22)
+      .attr('cy', 50)
+      .attr('r', 4)
+      .style('fill', primaryColor);
+
+    winLossLegend.append('text')
+      .text('win/loss')
+      .attr('x', -margin.left + 35)
+      .attr('y', 30)
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize);
+
+    winLossLegend.append('text')
+      .text('salary')
+      .attr('x', -margin.left + 35)
+      .attr('y', 50)
+      .style('alignment-baseline', 'middle')
+      .style('font-size', legendFontSize);
+  }
+  drawLegend();
+
+  // Draw rank sub-chart
+  function drawRanks() {
+    const rankChart = g.append('g')
+      .attr('class', 'rank-chart');
+
+    rankChart.append('rect')
+      .attr('x', timeScale(parseTime('1999/07/01')))
+      .attr('y', rankScale(1) - 20)
+      .attr('width', timeScale(parseTime('2017/06/30')) - timeScale(parseTime('1999/07/01')))
+      .attr('height', (rankScale(30) - rankScale(1)) + (20 + 20))
+      .style('fill', tertiaryColor)
+      .style('opacity', 0.2);
+
+    rankChart.selectAll('line.range-line')
+      .data([1, 10, 20, 30])
+      .enter()
+      .append('line')
+      .attr('class', 'range-line')
+      .attr('x1', timeScale(parseTime('1999/07/01')))
+      .attr('y1', d => rankScale(d))
+      .attr('x2', timeScale(parseTime('2017/07/01')))
+      .attr('y2', d => rankScale(d))
+      .attr('stroke', tertiaryColor)
+      .attr('stroke-width', 1)
+      .attr('shape-rendering', 'crispEdges')
+      .style('opacity', 0.5);
+
+    rankChart.append('path')
+      .datum(leagueRank)
+      .attr('fill', 'none')
+      .attr('stroke', primaryColor)
+      .attr('stroke-width', 3)
+      .attr('d', salaryLine);
+
+    rankChart.append('path')
+      .datum(leagueRank)
+      .attr('fill', 'none')
+      .attr('stroke', secondaryColor)
+      .attr('stroke-width', 3)
+      .attr('d', winLossLine);
+
+    rankChart.selectAll('circle.salary-circle')
+      .data(leagueRank)
+      .enter()
+      .append('circle')
+      .attr('class', 'salary-circle')
+      .attr('cx', d => (timeScale(parseTime(`20${d.season.slice(-2)}/01/01`))))
+      .attr('cy', d => rankScale(d.salaryRank))
+      .attr('r', 5)
+      .attr('fill', primaryColor);
+
+    rankChart.selectAll('circle.win-loss-circle')
+      .data(leagueRank)
+      .enter()
+      .append('circle')
+      .attr('class', 'win-loss-circle')
+      .attr('cx', d => (timeScale(parseTime(`20${d.season.slice(-2)}/01/01`))))
+      .attr('cy', d => rankScale(d.winLossRank))
+      .attr('r', 5)
+      .attr('fill', secondaryColor);
+  }
+  drawRanks();
 
   // Season split grid lines
   const splitLinesGroup = g.append('g')
@@ -158,135 +301,117 @@
     .attr('x1', d => timeScale(parseTime(d)))
     .attr('y1', 0)
     .attr('x2', d => timeScale(parseTime(d)))
-    .attr('y2', svgHeight)
+    .attr('y2', svgHeight - 120)
     .attr('stroke', tertiaryColor)
-    .attr('stroke-width', 0.5)
-    .style('opacity', 0.5);
+    .attr('stroke-width', 1)
+    .style('opacity', 0.2);
+
+  // Add "Dolan line"
+  function drawDolanLine() {
+    g.append('line')
+      .attr('class', 'dolan-line')
+      .attr('x1', timeScale(parseTime('1999/08/30')))
+      .attr('y1', margin.top)
+      .attr('x2', timeScale(parseTime('1999/08/30')))
+      .attr('y2', svgHeight - 120)
+      .attr('stroke', blackColor)
+      .attr('stroke-width', 2)
+      .attr('stroke-dasharray', '10, 10');
+
+    g.append('text')
+      .text('August 30th, 1999 - Dolan takes over')
+      .attr('transform', 'rotate(-90)')
+      .attr('text-anchor', 'end')
+      .attr('x', -margin.top)
+      .attr('y', timeScale(parseTime('1999/08/30')) + 5)
+      .style('font-size', '16px')
+      .style('alignment-baseline', 'hanging');
+  }
+  drawDolanLine();
 
   // Need to look into collision detection here, to automate y coordinate for events
-  let singleEvents;
+  let eventYs = [];
   function drawEvents() {
     const eventsGroup = g.append('g')
       .attr('class', 'events');
 
-    singleEvents = eventsGroup.selectAll('g.single-event')
+    const singleEvents = eventsGroup.selectAll('g.single-event')
       .data(events)
       .enter()
       .append('g')
       .attr('class', 'single-event')
-      .attr('transform', () => `translate(0, ${(Math.random() * (200 - 20)) + 20})`)
+      .attr('transform', (d) => {
+        const eventHeight = 20;
+        const eventsSpace = (svgHeight * 0.4) - 50;
+        const verticalEvents = Math.floor(eventsSpace / eventHeight);
+        // const yPos = (Math.random() * ((svgHeight * 0.4) - 50)) + margin.top;
+        // const yPos = (((i + 1) % verticalEvents) * eventHeight) + margin.top;
+        const yPos = (Math.floor(Math.random() * verticalEvents) * eventHeight) + margin.top;
+        const xPos = timeScale(parseTime(d.date));
+        return `translate(${xPos}, ${yPos})`;
+      })
       .attr('data-ratio', d => timeScale(parseTime(d.date)) / timeScale(parseTime('2017/06/30')));
 
     singleEvents.append('circle')
-      .attr('cx', d => timeScale(parseTime(d.date)))
+      .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', 2)
       .style('fill', blackColor);
 
+    /* singleEvents.append('line')
+      .attr('x1', d => timeScale(parseTime(d.date)))
+      .attr('y1', 0)
+      .attr('x2', d => timeScale(parseTime(d.date)))
+      .attr('y2', svgHeight)
+      .attr('stroke', tertiaryColor)
+      .attr('stroke-width', 1); */
+
     singleEvents.append('text')
       .text(d => d.title)
-      .attr('x', d => timeScale(parseTime(d.date)))
-      .attr('y', -10)
-      .style('text-anchor', 'middle')
+      .attr('x', (d, i) => {
+        let xPos;
+        if (events.length - i <= 10) {
+          xPos = -8;
+        } else {
+          xPos = 8;
+        }
+        return xPos;
+      })
+      .attr('y', 0)
+      .attr('alignment-baseline', 'middle')
+      .style('text-anchor', (d, i) => {
+        let anchor;
+        if (events.length - i <= 10) {
+          anchor = 'end';
+        } else {
+          anchor = 'start';
+        }
+        return anchor;
+      })
       .style('fill', blackColor)
-      .style('font-size', '16px')
-      .style('opacity', 0);
+      .style('font-size', '14px');
   }
   drawEvents();
 
-  // Draw rank sub-chart
-  function drawRanks() {
-    const rankChart = g.append('g')
-      .attr('class', 'rank-chart');
-
-    const rankGrid = rankChart.append('g')
-      .attr('class', 'rank-grid');
-
-    rankGrid.selectAll('line.rank-grid-line')
-      .data([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
-      .enter()
-      .append('line')
-      .attr('class', 'rank-grid-line')
-      .attr('x1', timeScale(parseTime('1999/07/01')))
-      .attr('y1', d => rankScale(d))
-      .attr('x2', timeScale(parseTime('2017/06/30')))
-      .attr('y2', d => rankScale(d))
-      .attr('stroke', tertiaryColor)
-      .attr('stroke-width', 0.5)
-      .style('opacity', 0.5)
-      .attr('stroke-dasharray', '2, 2');
-
-    const winLossLines = rankChart.append('g')
-      .attr('class', 'win-loss-lines');
-
-    winLossLines.selectAll('line.win-loss-line')
-      .data(leagueRank)
-      .enter()
-      .append('line')
-      .attr('class', 'win-loss-line')
-      .attr('x1', (d) => {
-        const currentSeason = +`20${d.season.slice(-2)}`;
-        return timeScale(parseTime(`${currentSeason - 1}/07/01`)) + 30;
-      })
-      .attr('y1', d => rankScale(d.winLossRank))
-      .attr('x2', (d) => {
-        const currentSeason = +`20${d.season.slice(-2)}`;
-        return timeScale(parseTime(`${currentSeason}/07/01`)) - 30;
-      })
-      .attr('y2', d => rankScale(d.winLossRank))
-      .attr('fill', 'none')
-      .attr('stroke', secondaryColor)
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 4);
-
-    const salaryLines = rankChart.append('g')
-      .attr('class', 'salary-lines');
-
-    salaryLines.selectAll('line.salary-line')
-      .data(leagueRank)
-      .enter()
-      .append('line')
-      .attr('class', 'salary-line')
-      .attr('x1', (d) => {
-        const currentSeason = +`20${d.season.slice(-2)}`;
-        return timeScale(parseTime(`${currentSeason - 1}/07/01`)) + 30;
-      })
-      .attr('y1', d => rankScale(d.salaryRank))
-      .attr('x2', (d) => {
-        const currentSeason = +`20${d.season.slice(-2)}`;
-        return timeScale(parseTime(`${currentSeason}/07/01`)) - 30;
-      })
-      .attr('y2', d => rankScale(d.salaryRank))
-      .attr('fill', 'none')
-      .attr('stroke', primaryColor)
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 4);
-  }
-  drawRanks();
-
   // Axis
   function drawAxis() {
-    const axisVerticalPlacement = svgHeight - 50;
     const axisGroup = g.append('g')
       .attr('class', 'axis-group')
       .attr('transform', `translate(0, ${axisVerticalPlacement})`);
 
     axisGroup.append('line')
-      .attr('x1', 0)
+      .attr('x1', timeScale(parseTime('1999/07/01')))
       .attr('y1', 0)
-      .attr('x2', svgWidth)
+      .attr('x2', timeScale(parseTime('2017/06/30')))
       .attr('y2', 0)
       .attr('stroke', blackColor)
       .attr('stroke-width', 3);
 
     const seasonTicks = leagueRank.map(el => el.season);
-
     axisGroup.selectAll('line.season-tick')
       .data(seasonTicks)
       .enter()
+      .filter(d => d !== '2016-17')
       .append('line')
       .attr('class', 'season-tick')
       .attr('x1', d => timeScale(parseTime(`20${d.slice(-2)}/07/01`)))
@@ -323,50 +448,28 @@
       .data(GMs)
       .enter()
       .append('rect')
-      .attr('data-name', d => d.Name)
+      .attr('data-name', d => d.name)
       .attr('data-start', d => d.start)
       .attr('data-end', d => d.end)
       .attr('class', 'gm')
       .attr('x', d => timeScale(parseTime(d.start)) + 2)
-      .attr('y', svgHeight - 150)
+      .attr('y', (d, i) => i % 2 === 0 ? gmsTop : gmsTop - 10)
       .attr('width', d => (timeScale(parseTime(d.end)) - timeScale(parseTime(d.start))) - 2)
-      .attr('height', 30)
-      .style('fill', primaryColor);
+      .attr('height', 10)
+      .style('fill', tertiaryColor);
 
     GMsGroup.selectAll('text')
       .data(GMs)
       .enter()
       .append('text')
-      .text(d => d.Name);
+      .text(d => d.name)
+      .attr('x', d => timeScale(parseTime(d.start)) + 4)
+      .attr('y', (d, i) => (i % 2 === 0) ? gmsTop + 15 : gmsTop - 15)
+      .style('font-size', '12px')
+      .style('fill', blackColor)
+      .style('alignment-baseline', (d, i) => (i % 2 === 0 ? 'hanging' : 'baseline'));
   }
   drawGMs();
-
-  // Coaches
-  function drawCoaches() {
-    const coachesGroup = g.append('g')
-      .attr('class', 'coaches');
-
-    coachesGroup.selectAll('rect.coach')
-      .data(coaches)
-      .enter()
-      .append('rect')
-      .attr('data-name', d => d.Name)
-      .attr('data-start', d => d.start)
-      .attr('data-end', d => d.end)
-      .attr('class', 'coach')
-      .attr('x', d => timeScale(parseTime(d.start)) + 2)
-      .attr('y', svgHeight - 100)
-      .attr('width', (d) => {
-        if ((timeScale(parseTime(d.end)) - timeScale(parseTime(d.start))) > 2) {
-          return (timeScale(parseTime(d.end)) - timeScale(parseTime(d.start)) - 2);
-        } else {
-          return 2;
-        }
-      })
-      .attr('height', 20)
-      .style('fill', primaryColor);
-  }
-  drawCoaches();
 
   // ScrollMagic
   function scroller() {
@@ -379,11 +482,18 @@
       .addTo(controller)
       .triggerHook(0)
       .on('progress', (e) => {
-        g.attr('transform', `translate(${(e.progress * (wrapperWidth - svgWidth)) + margin.left}, 0)`);
-        singleEvents.each(function () {
-          const ratioValue = d3.select(this).attr('data-ratio');
-          d3.select(this).select('text').style('opacity', e.progress - ratioValue + 0.75);
-        });
+        const translateScale = d3.scaleLinear().domain([0.1, 0.9]).range([0, 1]);
+        let xTranslate;
+
+        if (e.progress < 0.1) {
+          xTranslate = margin.left;
+        } else if (e.progress > 0.9) {
+          xTranslate = (wrapperWidth - svgWidth) + margin.left;
+        } else {
+          xTranslate = (translateScale(e.progress) * (wrapperWidth - svgWidth)) + margin.left;
+        }
+
+        g.attr('transform', `translate(${xTranslate}, 0)`);
       });
   }
   scroller();
