@@ -6,7 +6,7 @@
   // const wrapperHeight = jQuery('#viz-wrapper').height();
   const margin = { top: 50, right: 0, bottom: 0, left: 150 };
   const svgHeight = jQuery(window).height();
-  const svgWidth = svgHeight * 3 > 2000 ? svgHeight * 3 : 2000;
+  const svgWidth = svgHeight * 3 > 3000 ? svgHeight * 3 : 3000;
   // const svgWidth = wrapperWidth;
 
   const primaryColor = '#006BB6';
@@ -49,50 +49,53 @@
   ];
 
   const events = [
-    { date: '2000/09/20', title: 'Ewing traded' },
-    { date: '2001/05/04', title: 'First round loss to Raptors' },
-    { date: '2001/12/08', title: 'Jeff Van Gundy quits' },
-    { date: '2002/04/17', title: 'Knicks miss the playoffs' },
-    { date: '2002/06/26', title: 'McDyess trade' },
-    { date: '2002/10/08', title: 'McDyess injured' },
-    { date: '2003/12/22', title: 'Layden out, Thomas in' },
-    { date: '2004/01/06', title: 'Stephon Marbury trade' },
-    { date: '2004/04/25', title: 'Nets sweep Knicks' },
-    { date: '2005/01/22', title: 'Lenny Wilkens resigns' },
-    { date: '2005/07/28', title: 'Larry Brown hired' },
-    { date: '2005/07/13', title: 'Jerome James signed' },
-    { date: '2005/10/03', title: 'Eddy Curry trade' },
-    { date: '2006/01/25', title: 'Sexual harassment suit' },
-    { date: '2006/02/04', title: 'Jalen Rose trade' },
-    { date: '2006/02/23', title: 'Francis trade' },
-    { date: '2006/07/23', title: 'Larry Brown out' },
-    { date: '2006/12/16', title: 'Knicks - Nuggets brawl' },
-    { date: '2007/11/29', title: '104-59 loss to Celtics' },
-    { date: '2007/12/10', title: 'Sexual harassment suit settled' },
-    { date: '2008/04/02', title: 'Isiah Thomas fired' },
-    { date: '2008/05/13', title: 'Mike D\'Antoni hired' },
-    { date: '2009/02/24', title: 'Marbury bought out' },
-    { date: '2010/01/24', title: '128-78 home loss to Mavericks' },
-    { date: '2010/07/05', title: 'Stoudemire signed' },
-    { date: '2011/02/22', title: 'Carmelo Anthony trade' },
-    { date: '2011/06/03', title: 'Donnie Walsh steps down' },
-    { date: '2011/12/11', title: 'Bibby signed' },
-    { date: '2012/02/18', title: 'J.R. Smith signed' },
-    { date: '2012/03/04', title: 'Mike D\'Antoni resigns' },
-    { date: '2012/05/01', title: 'Amare vs fire extinguisher' },
-    { date: '2012/05/03', title: '13th consecutive playoffs loss' },
-    { date: '2012/08/01', title: 'Chris Smith signed' },
-    { date: '2013/07/10', title: 'Bargnani trade' },
-    { date: '2014/03/18', title: 'Phil Jackson named president' },
-    { date: '2014/06/09', title: 'Derek Fisher hired' },
-    { date: '2015/01/07', title: '13th consecutive loss' },
-    { date: '2015/10/07', title: 'Fisher vs Barnes' },
-    { date: '2016/02/08', title: 'Derek Fisher fired' },
-    { date: '2016/06/22', title: 'Derrick Rose trade' },
-    { date: '2016/06/30', title: 'Noah signed' },
-    { date: '2016/10/05', title: 'Derrick Rose rape trial begins' },
-    { date: '2017/01/09', title: 'Derrick Rose disappears' },
-    { date: '2017/02/08', title: 'Oakley thrown out' },
+    { date: '2000/09/20', title: 'Ewing traded', desc: 'Knicks deal franchise legend to Sonics in a four-team, 12-player deal.' },
+    { date: '2001/05/04', title: 'First round loss to Raptors', desc: 'Knicks fail to win first-round playoff series for the first time since 1991' },
+    { date: '2001/12/08', title: 'Jeff Van Gundy quits', desc: 'Jeff Van Gundy resigns 19 games into the season, saying he had considered the decision since "early last summer".' },
+    { date: '2002/04/17', title: 'Knicks miss the playoffs', desc: 'Knicks miss the playoffs for the first time since 1986/87 season.' },
+    { date: '2002/06/26', title: 'McDyess trade', desc: 'Knicks trade for Antonio McDyess, who missed previous season because of knee injury, sending Marcus Camby, Mark Jackson and draft rights to Nene to Denver.' },
+    { date: '2002/10/08', title: 'McDyess injured', desc: 'Antonio McDyess suffers season-ending knee injury with less than 2 minutes left to play in his third preseason game.' },
+    { date: '2003/12/22', title: 'Layden out, Thomas in', desc: 'GM Scott Layden is fired by James Dolan, Isiah Lord Thomas III era begins.' },
+    { date: '2004/01/06', title: 'Stephon Marbury trade', desc: 'Antonio McDyess, Charlie Ward and Howard Eisley traded for Marbury and Penny Hardaway.' },
+    { date: '2004/04/25', title: 'Nets sweep Knicks', desc: 'Knicks get swept by New Jersey Nets in the first round, Knicks "legend" Tim Thomas calls Kenyon Martin "Fugazy".' },
+    { date: '2005/01/22', title: 'Lenny Wilkens resigns', desc: 'After losing 9 out of 10 games, Wilkens resigns.' },
+    { date: '2005/07/28', title: 'Larry Brown hired', desc: 'Larry Brown sign 5-year $50m contract to coach the team, becoming fourth Knicks head coach in 18 months.' },
+    { date: '2005/07/13', title: 'Jerome James signed', desc: 'After "dominating" *(12.5 ppg, 6.8 rpg in 11 games) in the playoffs previous season, Jerome James signs 5-year, $30m contract with the Knicks.' },
+    { date: '2005/10/03', title: 'Eddy Curry trade', desc: 'Knicks send Tim Thomas, Michael Sweetney and two unprotected picks to Chicago (2nd in 2006 - LaMarcus Aldridge - and 9th in 2007 - Joakim Noah) for Eddy Curry.' },
+    { date: '2006/01/25', title: 'Isiah Thomas sexual harassment suit', desc: 'Former Knicks executive Anucha Browne Sanders files a secual harassment lawsuit against Isiah Thomas and Madison Square Garden.' },
+    { date: '2006/02/04', title: 'Jalen Rose trade', desc: 'Knicks trade for Jalen Rose. Larry Brown, who, according to Rose "tried to get me out of the league in 1996/97" still coaches the team.' },
+    { date: '2006/02/23', title: 'Francis trade', desc: 'Knicks form higest paid backcourt duo in the NBA, by trading Trevor Ariza and Penny Hardaway for Francis.' },
+    { date: '2006/07/23', title: 'Larry Brown out, Thomas becomes HC', desc: 'After one season with the team, Larry Brown is fired and paid $18.5m to leave. Isiah Thomas takes over head coaching duties.' },
+    { date: '2006/12/16', title: 'Knicks - Nuggets brawl', desc: 'Knicks and Nuggets brawl in MSG, future "no-trade clause" Knicks superstar Carmelo Anthony is suspended 15 games for his role in the fight.' },
+    { date: '2007/11/29', title: '104-59 loss to Celtics', desc: 'Celtics hand Knicks the worst loss in franchise history.' },
+    { date: '2007/12/10', title: 'Isiah Thomas sexual harassment suit settled', desc: 'Jury awards $11.6m to Anucha Browne Sanders, Thomas still claims he is innocent.' },
+    { date: '2008/04/02', title: 'Isiah Thomas fired', desc: 'Thomas gets "reassigned" from head coach position, banned from having contact with any Knicks players.' },
+    { date: '2008/05/13', title: 'Mike D\'Antoni hired', desc: 'D\'Antoni acceots 4-year, $24m offer to become Knicks head coach. This looked like a good move at the time.' },
+    { date: '2008/12/01', title: 'Marbury banned from MSG', desc: 'After allegedly refusing an offer by D\'Antoni to "play 35 minutes in a game if he wanted to", Marbury is banner from attending Knicks\' practices and games.' },
+    { date: '2009/01/12', title: 'Eddy Curry sexual harassment suit', desc: '"Look at me, Dave, look. Come and touch it, Dave."' },
+    { date: '2009/02/24', title: 'Marbury bought out', desc: 'After months of speculation, Knicks and Stephon Marbury agree to a contract buyout.' },
+    { date: '2010/01/24', title: '128-78 home loss to Mavericks', desc: 'Knicks suffer the worst home loss in franchise history, losing by 50 points to Dallas Mavericks.' },
+    { date: '2010/07/05', title: 'Stoudemire signed', desc: 'Knicks sign often injured Amare Stoudemire to uninsured contract, 5-year, $100m contract.' },
+    { date: '2011/02/22', title: 'Carmelo Anthony trade', desc: 'Knicks trade several young players and draft picks for Carmelo Anthony, who was expected to sign for Knicks as free agent after the season.' },
+    { date: '2011/06/03', title: 'Donnie Walsh steps down', desc: 'Donnie Walsh steps down, allegedly because Dolan forced Anthony trade.' },
+    { date: '2011/12/11', title: 'Bibby signed', desc: 'Knicks sign Mike Bibby, in 2011, he starts 4 games for the team.' },
+    { date: '2012/02/18', title: 'J.R. Smith signed', desc: '"New York Knicks It Is!" - Smith on Twitter, "We talked to a lot of people, we are comfortable with the decision we made and we\'re hopeful that it\'s all going to work out for the best." - Grunwald.' },
+    { date: '2012/03/04', title: 'Mike D\'Antoni resigns', desc: 'Mike D\'Antoni resigns after clashing with Carmelo Anthony.' },
+    { date: '2012/05/01', title: 'Amare vs fire extinguisher', desc: 'Amare Stoudemire cuts hand punching a fire extinguisher after Game 2 of first round series against Miami Heat, he would miss remainder of the series.' },
+    { date: '2012/05/03', title: '13th consecutive playoffs loss', desc: 'Knicks break NBA record by suffering 13th consecutive playofs loss.' },
+    { date: '2012/08/01', title: 'Chris Smith signed', desc: 'Knicks sign J.R. Smith\'s brother, Chris, to contract.' },
+    { date: '2013/07/10', title: 'Bargnani trade', desc: 'Knicks trade Quentin Richardson, Steve Novak, Marcus Camby and three draft picks for Andrea Bargnani, because "Seven-foot versatile players with a good midrange offensive game and an ability to stretch the other team\'s defense are hard to come by in this league"' },
+    { date: '2014/03/18', title: 'Phil Jackson named president', desc: 'Phil Jackson named team president, both Jackson and GM Steve Mills to report directly to Dolan.' },
+    { date: '2014/06/09', title: 'Derek Fisher hired', desc: 'Knicks hire Derek Fisher, who never coached before, to a 5-year $25m deal.' },
+    { date: '2015/01/07', title: '13th consecutive loss', desc: 'Knicks suffer franchise-record 13th consecutive loss, the streak would reach 16 games.' },
+    { date: '2015/04/15', title: '17-65', desc: 'Knicks finish the season with a 17-65 record, the worst in franchise history.' },
+    { date: '2015/10/07', title: 'Fisher vs Barnes', desc: 'Knicks head coach Derek Fisher reportedly gets beaten up by Matt Barnes over a woman.' },
+    { date: '2016/02/08', title: 'Derek Fisher fired', desc: 'Knicks fire Derek Fisher, Kurt Rambis takes over as interim head coach.' },
+    { date: '2016/06/22', title: 'Derrick Rose trade', desc: 'Knicks trade for former MVP Derrick Rose.' },
+    { date: '2016/06/30', title: 'Noah signed', desc: 'Knicks sign Joakim Noah to a 4-year, $72m contract.' },
+    { date: '2016/10/05', title: 'Derrick Rose rape trial begins', desc: 'Civil trial accusing Rose of gang raping a female friend begins.' },
+    { date: '2017/01/09', title: 'Derrick Rose disappears', desc: 'Rose fails to show up for a game after being benched in 4th quarter of a game three days prior.' },
+    { date: '2017/02/08', title: 'Oakley thrown out of MSG', desc: 'Knicks legend Charles Oakley is thrown out of MSG during a Knicks game and later arrested.' },
   ];
 
   const seasonSplits = [
@@ -121,7 +124,7 @@
     .domain([parseTime('1999/07/01'), parseTime('2017/06/30')]);
 
   const rankScale = d3.scaleLinear()
-    .range([svgHeight * 0.5, axisVerticalPlacement - 20])
+    .range([(svgHeight * 0.5) + 20, axisVerticalPlacement - 20])
     .domain([1, 30]);
 
   const salaryLine = d3.line()
@@ -320,53 +323,81 @@
 
     g.append('text')
       .text('August 30th, 1999 - Dolan takes over')
-      .attr('transform', 'rotate(-90)')
-      .attr('text-anchor', 'end')
-      .attr('x', -margin.top)
-      .attr('y', timeScale(parseTime('1999/08/30')) + 5)
-      .style('font-size', '16px')
+      .attr('x', timeScale(parseTime('1999/08/30')) + 7)
+      .attr('y', margin.top)
+      .style('font-size', '14px')
       .style('alignment-baseline', 'hanging');
   }
   drawDolanLine();
 
   // Need to look into collision detection here, to automate y coordinate for events
-  let eventYs = [];
   function drawEvents() {
     const eventsGroup = g.append('g')
       .attr('class', 'events');
+
+    const eventsLineY = ((svgHeight * 0.5) + margin.top) / 2;
+
+    eventsGroup.append('text')
+      .text('DolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucksDolansucks')
+      .attr('x', timeScale(parseTime('1999/07/01')))
+      .attr('y', eventsLineY)
+      .style('font-size', '8px')
+      .style('alignment-baseline', 'middle')
+      .style('text-transform', 'uppercase')
+      .style('font-weight', 'bold')
+      .style('letter-spacing', 1);
+
+    function getyPos(d, i) {
+      const eventHeight = ((svgHeight * 0.5) - margin.top - 60) / 8;
+      const yValues = [
+        eventsLineY - ((eventHeight * 7) / 2) - margin.top - 15,
+        ((eventsLineY + (eventHeight / 2)) - margin.top) + 15,
+        eventsLineY - ((eventHeight * 5) / 2) - margin.top - 15,
+        ((eventsLineY + ((eventHeight * 3) / 2)) - margin.top) + 15,
+        ((eventsLineY + ((eventHeight * 7) / 2)) - margin.top) + 15,
+        eventsLineY - (eventHeight / 2) - margin.top - 15,
+        ((eventsLineY + ((eventHeight * 5) / 2)) - margin.top) + 15,
+        eventsLineY - ((eventHeight * 3) / 2) - margin.top - 15,
+      ];
+      const yPos = yValues[(i + 1) % 8] + margin.top;
+      return yPos;
+    }
 
     const singleEvents = eventsGroup.selectAll('g.single-event')
       .data(events)
       .enter()
       .append('g')
       .attr('class', 'single-event')
-      .attr('transform', (d) => {
-        const eventHeight = 20;
-        const eventsSpace = (svgHeight * 0.4) - 50;
-        const verticalEvents = Math.floor(eventsSpace / eventHeight);
-        // const yPos = (Math.random() * ((svgHeight * 0.4) - 50)) + margin.top;
-        // const yPos = (((i + 1) % verticalEvents) * eventHeight) + margin.top;
-        const yPos = (Math.floor(Math.random() * verticalEvents) * eventHeight) + margin.top;
+      .attr('transform', (d, i) => {
+        const yPos = getyPos(d, i);
         const xPos = timeScale(parseTime(d.date));
         return `translate(${xPos}, ${yPos})`;
       })
       .attr('data-ratio', d => timeScale(parseTime(d.date)) / timeScale(parseTime('2017/06/30')));
 
-    singleEvents.append('circle')
+    const eventLines = singleEvents.append('line')
+      .attr('x1', 0)
+      .attr('y1', (d, i) => {
+        const yPos = getyPos(d, i);
+        return yPos > eventsLineY ? eventsLineY - yPos + 8 : eventsLineY - yPos - 8;
+      })
+      .attr('x1', 0)
+      .attr('y2', (d, i) => {
+        const yPos = getyPos(d, i);
+        return yPos > eventsLineY ? eventsLineY - yPos + 8 : eventsLineY - yPos - 8;
+      })
+      .attr('stroke', tertiaryColor)
+      .attr('stroke-width', 1)
+      .attr('shape-rendering', 'crispEdges');
+
+    const eventCircles = singleEvents.append('circle')
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', 2)
-      .style('fill', blackColor);
+      .style('fill', tertiaryColor)
+      .style('opacity', 0);
 
-    /* singleEvents.append('line')
-      .attr('x1', d => timeScale(parseTime(d.date)))
-      .attr('y1', 0)
-      .attr('x2', d => timeScale(parseTime(d.date)))
-      .attr('y2', svgHeight)
-      .attr('stroke', tertiaryColor)
-      .attr('stroke-width', 1); */
-
-    singleEvents.append('text')
+    const eventLabels = singleEvents.append('text')
       .text(d => d.title)
       .attr('x', (d, i) => {
         let xPos;
@@ -389,7 +420,26 @@
         return anchor;
       })
       .style('fill', blackColor)
-      .style('font-size', '14px');
+      .style('font-size', '14px')
+      .style('opacity', 0);
+
+    function transitionEvents() {
+      const eventTransition = d3.transition()
+        .duration(500)
+        .ease(d3.easeLinear);
+
+      eventLines.transition(eventTransition)
+        .attr('y2', 0);
+
+      eventCircles.transition(eventTransition)
+        .delay(600)
+        .style('opacity', 1);
+
+      eventLabels.transition(eventTransition)
+        .delay(600)
+        .style('opacity', 1);
+    }
+    transitionEvents();
   }
   drawEvents();
 
