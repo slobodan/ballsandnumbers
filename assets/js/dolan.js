@@ -325,7 +325,8 @@
       .text('August 30th, 1999 - Dolan takes over')
       .attr('x', timeScale(parseTime('1999/08/30')) + 7)
       .attr('y', margin.top)
-      .style('font-size', '14px')
+      .style('font-size', '16px')
+      .style('font-weight', 'bold')
       .style('alignment-baseline', 'hanging');
   }
   drawDolanLine();
@@ -425,18 +426,21 @@
 
     function transitionEvents() {
       const eventTransition = d3.transition()
-        .duration(500)
         .ease(d3.easeLinear);
 
       eventLines.transition(eventTransition)
+        .delay((d, i) => i * 50)
+        .duration(500)
         .attr('y2', 0);
 
       eventCircles.transition(eventTransition)
-        .delay(600)
+        .delay((d, i) => i * 50 + 200)
+        .duration(500)
         .style('opacity', 1);
 
       eventLabels.transition(eventTransition)
-        .delay(600)
+        .delay((d, i) => i * 50 + 200)
+        .duration(500)
         .style('opacity', 1);
     }
     transitionEvents();
