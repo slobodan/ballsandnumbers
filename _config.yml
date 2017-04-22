@@ -33,6 +33,7 @@ markdown: kramdown
 gems:
   - jekyll-feed
   - jekyll-paginate
+  - jekyll-babel
 exclude:
   - Gemfile
   - Gemfile.lock
