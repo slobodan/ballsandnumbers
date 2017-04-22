@@ -144,7 +144,7 @@
     .y(d => rankScale(d.salaryRank));
 
   const winLossLine = d3.line()
-  .x(d => (timeScale(parseTime(`20${d.season.slice(-2)}/01/01`))))
+    .x(d => (timeScale(parseTime(`20${d.season.slice(-2)}/01/01`))))
     .y(d => rankScale(d.winLossRank));
 
   const svg = d3.select('#viz').append('svg')
