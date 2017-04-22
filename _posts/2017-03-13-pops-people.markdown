@@ -15,4 +15,4 @@ custom_js:
 
 <p>Chart below shows every assistant and every player that ever was a member of Pop's Spurs. Click year to filter people only from that season.</p>
 
-<div id="viz" style="margin: 2rem 0 0; min-height: 600px;"></div>
+<div id="viz" style="margin-top: 2rem; min-height: 600px;"></div>

@@ -13,7 +13,7 @@ custom_js:
 
 <p>Chart below shows popularity of every NBA jersey number, in every season since 1946-47. Click Totals / Percentage toggles above the chart to change the unit, mouseover a field to see list of players.</p>
 
-<div id="viz" style="margin: 1rem 0 2rem; min-height: 800px;"></div>
+<div id="viz" style="margin-top: 1rem;margin-bottom: 2rem; min-height: 800px;"></div>
 
 <p>A few more random facts I found interesting:</p>
 
